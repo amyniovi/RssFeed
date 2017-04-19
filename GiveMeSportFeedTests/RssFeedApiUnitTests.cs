@@ -1,13 +1,20 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using GiveMeSportFeed.Areas;
+using GiveMeSportFeed.Models;
+using NUnit.Framework;
 
 namespace GiveMeSportFeedTests
 {
     [TestFixture]
     public class RssFeedApiUnitTests
     {
+        private RSSFeedController _controller = new RSSFeedController();
         [Test]
         public void GetFeed_WhenNoData_ReturnNotFoundAndEmptyItemDtoList()
         {
+            var result = _controller.Get() as List<ItemDto>;
+
+            Assert.That(result == new List<ItemDto>());
         }
 
         [Test]

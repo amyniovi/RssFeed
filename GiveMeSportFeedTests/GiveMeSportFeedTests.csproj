@@ -89,6 +89,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GiveMeSportFeed\GiveMeSportFeed.csproj">
+      <Project>{04242FB5-D484-4A6D-BA0D-AC646B446068}</Project>
+      <Name>GiveMeSportFeed</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
