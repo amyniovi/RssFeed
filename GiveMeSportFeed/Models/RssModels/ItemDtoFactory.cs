@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.ServiceModel.Syndication;
-using System.Web;
 
 namespace GiveMeSportFeed.Models.RssModels
-{
-    public class ItemDtoFactory
+{/// <summary>
+/// assumming isPermaLInk = true for all, 
+/// assumming one Link per item
+/// </summary>
+    public static class ItemDtoFactory
     {
-        public ItemDto Create(SyndicationItem syndicationItem)
+        public static ItemDto Create(SyndicationItem syndicationItem)
         {
-            //implement
-            return new ItemDto();
+            return new ItemDto()
+            {
+                Comments = syndicationItem.Summary.Text,
+                Guid = syndicationItem.Id,
+                IsPermaLink = true,
+                Link = syndicationItem.Links.FirstOrDefault()?.ToString(),
+                PublishedDate = syndicationItem.PublishDate.DateTime,
+                Title = syndicationItem.Title.Text
+            };
         }
     }
 }

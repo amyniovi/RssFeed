@@ -212,7 +212,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\RSSFeedController.cs" />
+    <Compile Include="Controllers\RssFeedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RssMockController.cs" />
     <Compile Include="Global.asax.cs">

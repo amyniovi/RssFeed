@@ -1,30 +1,52 @@
-﻿using System.Collections.Generic;
-using GiveMeSportFeed.Areas;
+﻿using System.CodeDom;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.ServiceModel.Syndication;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using GiveMeSportFeed.Controllers;
 using GiveMeSportFeed.Models;
 using NUnit.Framework;
 
 namespace GiveMeSportFeedTests
 {
+    /// <summary>
+    /// I chose to Unit Test the controller using a Fake Rss Service
+    /// Alternatively we could selfhost the existing service and test that.
+    /// </summary>
     [TestFixture]
     public class RssFeedApiUnitTests
     {
-        private RSSFeedController _controller = new RSSFeedController();
         [Test]
-        public void GetFeed_WhenNoData_ReturnNotFoundAndEmptyItemDtoList()
+        public void GetFeed_WhenWrongAddress_ReturnErrorResponse()
         {
-            var result = _controller.Get() as List<ItemDto>;
+            var service = new RssService {ServiceUri = "http://www.givemeort.com/rss.ashx"};
+            var controller = new RssFeedController(service);
 
-            Assert.That(result == new List<ItemDto>());
+            var result = controller.Get().Result;
+
+            Assert.IsInstanceOf(typeof(InternalServerErrorResult), result);
         }
 
         [Test]
-        public void GetFeed_WhenNotSuccesful_ReturnEmptyItemDtoList()
+        public void GetFeed_whenNullOrZeroItems_ReturnNotFound()
         {
+            var service = new FakeRssService(new List<ItemDto>());
+            var controller = new RssFeedController(service);
+
+            var result = controller.Get().Result;
+
+            Assert.IsInstanceOf(typeof(NotFoundResult), result);
         }
 
         [Test]
         public void GetFeed_WhenSuccessStatus_ShouldReturn10ItemDtos()
         {
+           // var result = _controller.Get().Result;
+
         }
 
         [Test]
@@ -40,6 +62,22 @@ namespace GiveMeSportFeedTests
         [Test]
         public void GetFeed_AtLeastOneDiffGuid_ReturnListofItems()
         {
+        }
+
+        internal class FakeRssService : IRssService
+        {
+            private readonly List<ItemDto> _dtos;
+
+            public FakeRssService(List<ItemDto> dtos)
+            {
+                _dtos = dtos;
+            }
+
+            public Task<IEnumerable<ItemDto>> GetRssItems()
+            {
+                return Task.FromResult((IEnumerable<ItemDto>) _dtos);
+
+            }
         }
 
     }
