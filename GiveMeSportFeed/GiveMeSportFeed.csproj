@@ -221,7 +221,8 @@
     <Compile Include="Models\RssModels\ItemDto.cs" />
     <Compile Include="Models\RssModels\ItemDtoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="RssApi.Interfaces\IRssService.cs" />
+    <Compile Include="RssApi.Services\RssService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1005,8 +1006,8 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="App\RssFeedController.js" />
-    <Content Include="App\RssFeedService.js" />
+    <Content Include="RssAngular.App\RssFeedController.js" />
+    <Content Include="RssAngular.App\RssFeedService.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1020,9 +1021,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Providers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

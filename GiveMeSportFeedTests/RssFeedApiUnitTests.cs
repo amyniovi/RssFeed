@@ -9,6 +9,8 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using GiveMeSportFeed.Controllers;
 using GiveMeSportFeed.Models;
+using GiveMeSportFeed.RssApi.Interfaces;
+using GiveMeSportFeed.RssApi.Services;
 using NUnit.Framework;
 
 namespace GiveMeSportFeedTests

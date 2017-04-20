@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.Xml;
 using System.Xml.XmlConfiguration;
 using GiveMeSportFeed.Models;
-using GiveMeSportFeed.Models.RssModels;
-using WebGrease.Css.Extensions;
+using GiveMeSportFeed.RssApi.Interfaces;
+using GiveMeSportFeed.RssApi.Services;
 
 namespace GiveMeSportFeed.Controllers
 {
@@ -53,44 +48,6 @@ namespace GiveMeSportFeed.Controllers
                 return NotFound();
 
             return Ok(dtos);
-        }
-    }
-
-    public interface IRssService
-    {
-        Task<IEnumerable<ItemDto>> GetRssItems();
-    }
-
-    public class RssService : IRssService
-    {
-        public string ServiceUri { get; set; } = "http://www.givemesport.com/rss.ashx";
-
-        public async Task<IEnumerable<ItemDto>> GetRssItems()
-        {
-            List<ItemDto> dtoList;
-            using (var httpClient = new HttpClient())
-            {
-                var stream = await httpClient.GetStreamAsync(new Uri(ServiceUri));
-                dtoList = ParseRssStream(stream).ToList();
-            }
-
-            return dtoList;
-        }
-
-        public IEnumerable<ItemDto> ParseRssStream(Stream stream)
-        {
-            var itemDtos = new List<ItemDto>();
-            using (var xmlReader = XmlReader.Create(stream))
-            {
-                SyndicationFeed theFeed = SyndicationFeed.Load(xmlReader);
-                if (theFeed == null || !theFeed.Items.Any())
-                {
-                    return new List<ItemDto>();
-                }
-
-                theFeed.Items.ForEach(syndItem => itemDtos.Add(ItemDtoFactory.Create(syndItem)));
-            }
-            return itemDtos;
         }
     }
 }
