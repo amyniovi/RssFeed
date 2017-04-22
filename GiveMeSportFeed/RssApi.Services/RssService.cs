@@ -9,6 +9,7 @@ using System.Xml;
 using GiveMeSportFeed.Models;
 using GiveMeSportFeed.Models.RssModels;
 using GiveMeSportFeed.RssApi.Interfaces;
+using GiveMeSportFeed.RssApi.Helpers;
 using WebGrease.Css.Extensions;
 
 namespace GiveMeSportFeed.RssApi.Services
@@ -17,32 +18,22 @@ namespace GiveMeSportFeed.RssApi.Services
     {
         public string ServiceUri { get; set; } = "http://www.givemesport.com/rss.ashx";
 
-        public async Task<IEnumerable<ItemDto>> GetRssItems()
+        public async Task<IEnumerable<SyndicationItem>> GetAllRssItems()
         {
-            List<ItemDto> dtoList;
             using (var httpClient = new HttpClient())
             {
                 var stream = await httpClient.GetStreamAsync(new Uri(ServiceUri));
-                dtoList = ParseRssStream(stream).ToList();
-            }
 
-            return dtoList;
-        }
-
-        public IEnumerable<ItemDto> ParseRssStream(Stream stream)
-        {
-            var itemDtos = new List<ItemDto>();
-            using (var xmlReader = XmlReader.Create(stream))
-            {
-                SyndicationFeed theFeed = SyndicationFeed.Load(xmlReader);
-                if (theFeed == null || !theFeed.Items.Any())
+                IEnumerable<SyndicationItem> syndicationItems;
+                using (var xmlReader = XmlReader.Create(stream))
                 {
-                    return new List<ItemDto>();
+                    var theFeed = SyndicationFeed.Load(xmlReader);
+                    syndicationItems = theFeed?.Items;
                 }
 
-                theFeed.Items.ForEach(syndItem => itemDtos.Add(ItemDtoFactory.Create(syndItem)));
+                return syndicationItems;
             }
-            return itemDtos;
+
         }
     }
 }

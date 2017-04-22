@@ -12,12 +12,12 @@ namespace GiveMeSportFeed.Models.RssModels
         {
             return new ItemDto()
             {
-                Comments = syndicationItem.Summary.Text,
+                Comments = syndicationItem.Summary?.Text,//get comments instead
                 Guid = syndicationItem.Id,
                 IsPermaLink = true,
-                Link = syndicationItem.Links.FirstOrDefault()?.ToString(),
+                Link = syndicationItem.Links?.FirstOrDefault()?.ToString(),
                 PublishedDate = syndicationItem.PublishDate.DateTime,
-                Title = syndicationItem.Title.Text
+                Title = syndicationItem.Title?.Text
             };
         }
     }
