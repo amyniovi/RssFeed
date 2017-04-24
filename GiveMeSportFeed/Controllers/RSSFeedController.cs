@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using System.Xml.XmlConfiguration;
 using GiveMeSportFeed.Models;
+using GiveMeSportFeed.RssApi.Attributes;
 using GiveMeSportFeed.RssApi.Interfaces;
 using GiveMeSportFeed.RssApi.Services;
 using GiveMeSportFeed.RssApi.Helpers;
@@ -19,7 +20,7 @@ namespace GiveMeSportFeed.Controllers
     /// <summary>
     /// This API doesnt need to accurately inform the user about Errors, hence only using InternalServerError, and NotFound for now.
     /// </summary>
-
+    [UseETag]
     public class RssFeedController : ApiController
     {
         private readonly IRssService _rssService;
