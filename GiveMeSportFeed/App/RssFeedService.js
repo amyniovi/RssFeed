@@ -1,20 +1,21 @@
-﻿
+﻿    var rssService = function ($http) {
 
-function RssFeedService() {
+        var getFeeds = function () {
+            return $http.get("http://localhost:64559/rssfeed")
+                .then(function (response) {
+                    return response.data;
+                });
+        };
+        var getBreakingNews = function () {
 
-    var getUpdatedFeeds = function () {
-        console.log("i work");
-    }
-    var getBreakingNews = function () {
+        };
 
-    }
-
-    return {
-        getUpdatedFeeds: getUpdatedFeeds,
-        getBreakingNews: getBreakingNews
+        return {
+            getFeeds: getFeeds,
+            getBreakingNews: getBreakingNews
+        };
     };
-}
 
-angular
-.module("rss")
-.service("RssFeedService", RssFeedService);
+    var module = angular.module("rss");
+    module.factory("rssService", rssService);
+

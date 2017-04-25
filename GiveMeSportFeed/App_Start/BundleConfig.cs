@@ -14,8 +14,11 @@ namespace GiveMeSportFeed
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                "~/App/RssFeedController.js",
-                "~/App/RssFeedService.js"
+                       "~/Scripts/angular.js",
+                       "~/Scripts/angular-http-etag.js",
+                        "~/App/app.js",
+                        "~/App/rssFeedService.js",
+                        "~/App/rssFeedController.js"
                 ));
         }
     }

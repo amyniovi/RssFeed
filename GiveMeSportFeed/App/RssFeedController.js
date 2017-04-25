@@ -1,10 +1,17 @@
-﻿var app = angular.module("rss", []);
+﻿
+    var rssFeedController = function ($scope, rssService) {
 
+        var onsuccess = function(data) {
+            $scope.model = data;
+        };
+        var onerror = function() {
+            $scope.model = "error";
+        };
 
-function rssFeedControler($scope) {
+        $scope.model = rssService.getFeeds().then(onsuccess, onerror);
+    };
 
-    $scope.model = "sports feed";
+    angular.module("rss")
+        .controller("rssFeedController", rssFeedController);
+    
 
- };
-
- app.controller("rssFeedControler", rssFeedControler);

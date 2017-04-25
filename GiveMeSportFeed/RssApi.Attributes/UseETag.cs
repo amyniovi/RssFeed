@@ -27,7 +27,7 @@ namespace GiveMeSportFeed.RssApi.Attributes
             var guids = dtos?.Select(dto => dto.Guid);
 
             if (responseContent == null || dtos == null || !dtos.Any()) return;
-            //\"-1958282966\""
+          
             var serverETag = HashETag(guids);
 
             AddCacheControl(context, serverETag, clientETags);
@@ -43,7 +43,7 @@ namespace GiveMeSportFeed.RssApi.Attributes
                 Public = true
             };
 
-            if (clientETags.First(entityTag => entityTag.Tag != serverETag) != null) return;
+            if (clientETags.First(entityTag => entityTag.ToString() != serverETag) != null) return;
 
             context.Response.StatusCode = HttpStatusCode.NotModified;
         }
