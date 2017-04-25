@@ -20,8 +20,6 @@ namespace GiveMeSportFeed.RssApi.Attributes
 
             HttpHeaderValueCollection<EntityTagHeaderValue> clientETags = context.Request.Headers.IfNoneMatch;
 
-            if (clientETags == null || !clientETags.Any()) return;
-
             var responseContent = context.Response.Content as ObjectContent;
             var dtos = responseContent?.Value as List<ItemDto>;
             var guids = dtos?.Select(dto => dto.Guid);
@@ -39,13 +37,16 @@ namespace GiveMeSportFeed.RssApi.Attributes
             context.Response.Headers.ETag = new EntityTagHeaderValue(serverETag);
             context.Response.Headers.CacheControl = new CacheControlHeaderValue()
             {
-                MaxAge = new TimeSpan(0, 5, 0),
+                MaxAge = new TimeSpan(0, 1, 0),
                 Public = true
             };
 
-            if (clientETags.First(entityTag => entityTag.ToString() != serverETag) != null) return;
+            if (clientETags == null || !clientETags.Any()) return;
+
+            if (clientETags.FirstOrDefault(entityTag => entityTag.ToString() != serverETag) != null) return;
 
             context.Response.StatusCode = HttpStatusCode.NotModified;
+            context.Response.Content = null;
         }
 
         public string HashETag(IEnumerable<string> guids)

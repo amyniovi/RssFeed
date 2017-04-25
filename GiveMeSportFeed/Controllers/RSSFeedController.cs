@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http.Headers;
 using System.ServiceModel.Syndication;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
-using System.Xml.XmlConfiguration;
 using GiveMeSportFeed.Models;
 using GiveMeSportFeed.RssApi.Attributes;
 using GiveMeSportFeed.RssApi.Interfaces;
@@ -39,7 +34,7 @@ namespace GiveMeSportFeed.Controllers
         }
 
         //localhost:PORT/RSSFeed
-        public async Task<IHttpActionResult> Get()
+        public async Task<IHttpActionResult> Get(int numberOfFeeds = 10, int minutes = 0)
         {
             List<SyndicationItem> items;
             List<ItemDto> dtos;
@@ -56,8 +51,12 @@ namespace GiveMeSportFeed.Controllers
             if (!dtos.Any())
                 return NotFound();
 
-            return Ok(_rssFilterService.Filter10Latest(dtos).ToList());
+            if (minutes > 0 && minutes < 15)
+                dtos = _rssFilterService.FilterLatestByTime(dtos, minutes).ToList();
+
+            return Ok(_rssFilterService.FilterLatestByNumber(dtos, numberOfFeeds).ToList());
         }
+       
     }
 }
 

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.ServiceModel.Syndication;
 using GiveMeSportFeed.Models;
 
-namespace GiveMeSportFeed.RssApi.Helpers
+namespace GiveMeSportFeed.RssApi.Interfaces
 {
     public interface IRssFilterService
     {
-        IEnumerable<ItemDto> Filter10Latest(IEnumerable<ItemDto> allItems);
+        IEnumerable<ItemDto> FilterLatestByNumber(IEnumerable<ItemDto> allItems, int numberOfItems);
+        IEnumerable<ItemDto> FilterLatestByTime(IEnumerable<ItemDto> allItems, int minutes);
         IEnumerable<ItemDto> ConvertToDtos(IEnumerable<SyndicationItem> syndicationItems);
     }
 }
