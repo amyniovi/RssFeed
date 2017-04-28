@@ -10,6 +10,12 @@ using WebGrease.Css.Extensions;
 
 namespace GiveMeSportFeed.RssApi.Attributes
 {
+    /// <summary>
+    /// This attribute is responsible for intercepting the httpresponse of the controllers that are marked with it to check for matching ETag.
+    /// If the Etag of the request matches that of the response, null content with a 304 status is returned. 
+    /// if the Etag doesnt match, then the response content and status are left as is but with the headers changed : 
+    /// caching headers and the server etag header  are added.
+    /// </summary>
     public class UseETag : ActionFilterAttribute
     {
         private readonly string _quotes = "\"";
@@ -37,7 +43,7 @@ namespace GiveMeSportFeed.RssApi.Attributes
             context.Response.Headers.ETag = new EntityTagHeaderValue(serverETag);
             context.Response.Headers.CacheControl = new CacheControlHeaderValue()
             {
-                MaxAge = new TimeSpan(0, 1, 0),
+                MaxAge = new TimeSpan(0, 0, 30),
                 Public = true
             };
 

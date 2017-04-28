@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
-using GiveMeSportFeed.Models;
-using GiveMeSportFeed.Models.RssModels;
 using GiveMeSportFeed.RssApi.Interfaces;
-using GiveMeSportFeed.RssApi.Helpers;
-using WebGrease.Css.Extensions;
 
 namespace GiveMeSportFeed.RssApi.Services
 {
@@ -33,7 +27,6 @@ namespace GiveMeSportFeed.RssApi.Services
 
                 return syndicationItems;
             }
-
         }
     }
 }

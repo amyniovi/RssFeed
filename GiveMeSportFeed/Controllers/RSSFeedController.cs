@@ -13,7 +13,16 @@ using GiveMeSportFeed.RssApi.Helpers;
 namespace GiveMeSportFeed.Controllers
 {
     /// <summary>
-    /// This API doesnt need to accurately inform the user about Errors, hence only using InternalServerError, and NotFound for now.
+    /// This API returns filtered and ordered feed items to the angular client in the App folder, 
+    /// making sure caching is used on the client if request is within 1 minute
+    /// and also it sends a "not modified" 304 status if the collection of feeds is not modified 
+    /// which is reflected on the client and server with the matching ETag.
+    /// Assumptions: 
+    /// 1. We order based on Published Date, not LastUpdatedDate 
+    /// 2. Guids are unique and change when the feeds are updated, hence they define uniqueness and could be used for ETag generation
+    /// 3. I have not used MVC in this solution but could easily tweak this project to add it. 
+    /// I instead chose to use angular for refreshing the feeds (without refreshing the browser) 
+    /// and hence simply chose to display the data with angular. If MVC is required i can re-submit.
     /// </summary>
     [UseETag]
     public class RssFeedController : ApiController
@@ -53,7 +62,7 @@ namespace GiveMeSportFeed.Controllers
 
             if (minutes > 0 && minutes < 15)
                 dtos = _rssFilterService.FilterLatestByTime(dtos, minutes).ToList();
-
+            //here we assumming there would not be more than 10 Breaking news
             return Ok(_rssFilterService.FilterLatestByNumber(dtos, numberOfFeeds).ToList());
         }
        

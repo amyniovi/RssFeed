@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html ng-app="rss">
 <head>
-    
+
 </head>
 <body>
     <link href="/Content/bootstrap.min.css" rel="stylesheet">
@@ -14,50 +14,50 @@
             </div>
         </div>
     </nav>
-<div class="container">
-    <div ng-controller="rssFeedController">
-        <table class="table table-striped table-bordered">
-            <thead>
-            <tr>
-                <td>Give Me Sport Latest...</td>
-            </tr>
-            </thead>
+    <div class="container">
+        <div ng-controller="rssFeedController">
+            <table class="table table-striped table-bordered" ng-hide="feeds.length===0 || feeds === undefinedn|| feeds ===null">
+                <thead>
+                    <tr>
+                        <td>Give Me Sport Latest...</td>
+                    </tr>
+                </thead>
 
-            <tbody>
-            <tr ng-repeat="item in feeds">
+                <tbody>
+                    <tr ng-repeat="item in feeds">
 
-                <td>
-                    <a ng-href="{{item.Guid}}">{{item.Title}}</a>
+                        <td>
+                            <a ng-href="{{item.Guid}}">{{item.Title}}</a>
 
-                </td>
-            </tr>
-            </tbody>
+                        </td>
+                    </tr>
+                </tbody>
 
-        </table>
-        <table class="table table-striped table-bordered" ng-hide="breakingNews.length===0">
-            <thead>
-            <tr>
-                <td>Breaking News...</td>
-            </tr>
-            </thead>
+            </table>
+            <table class="table table-striped table-bordered" ng-hide="breakingNews.length===0 || breakingNews===undefined || breakingNews===null">
+                <thead>
+                    <tr>
+                        <td>Breaking News...</td>
+                    </tr>
+                </thead>
 
-            <tbody >
-            <tr ng-repeat="item in breakingNews">
+                <tbody>
+                    <tr ng-repeat="item in breakingNews">
 
-                <td>
-                    <a ng-href="{{item.Guid}}">{{item.Title}}</a>
+                        <td>
+                            <a ng-href="{{item.Guid}}">{{item.Title}}</a>
 
-                </td>
-            </tr>
-            </tbody>
+                        </td>
+                    </tr>
+                </tbody>
 
-        </table>
+            </table>
 
+        </div>
     </div>
-</div>
 
-@Scripts.Render("~/bundles/angular")
-@Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/bootstrap")
 
 
 </body>
