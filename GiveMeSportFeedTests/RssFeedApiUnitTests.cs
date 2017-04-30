@@ -49,7 +49,7 @@ namespace GiveMeSportFeedTests
             _sampleData.Add(new SyndicationItem() { PublishDate = _now.AddMinutes(-15), Id = "http://www.givemesport.com/1035906-cm-punk-comments-on-why-he-went-to-the-wwe?autoplay=on" });
         }
 
-        //This test uses the actual RssService
+        //This test uses the actual RssService/ integration test.
         [Test]
         public void GetFeed_WhenWrongAddress_ReturnErrorResponse()
         {

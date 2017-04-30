@@ -31,7 +31,7 @@ var rssFeedController = function ($scope, rssService, $interval) {
         return $interval(getFeeds, 60000);
     };
 
-    //a bit more than 30 seconds as otherwise cache will be accessed 
+    //a bit more than 30 seconds as otherwise cache will be accessed due to cache control header
     var refreshBreakingNews = function() {
         return $interval(getBreakingNews, 40000  );
     };
